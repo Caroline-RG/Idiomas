@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="master.xhtml">
+
+	<ui:define name="title">
+        Open Language - #{cursoController.curso.id > 0 ? 'Editar curso' : 'Nuevo curso'}
+    </ui:define>
+
+	<ui:define name="titleCont">
+		<span>#{cursoController.curso.id > 0 ? 'Editar curso' : 'Nuevo curso'}</span>
+	</ui:define>
+	
+	<ui:define name="content">
+		<h:form>
+			<h:inputHidden id="id" value="#{cursoController.curso.id}"/>
+			
+			<h:outputLabel for="idioma" value="Idioma" 
+				styleClass="control-label" /><br/>
+			<p:selectOneMenu id="idioma" value="#{cursoController.curso.idioma}"
+				converter="omnifaces.SelectItemsConverter" required="true">
+				<f:selectItem itemValue="#{null}" itemLabel="Selecciona un curso" 
+					noSelectionOption="true" itemDisabled="true"/>
+				<f:selectItems value="#{idiomaController.lista}" var="i"
+					itemValue="#{i}" itemLabel="#{i.nombre}"/>
+			</p:selectOneMenu><br/>
+			
+			<h:outputLabel for="profesor" value="Profesor" 
+				styleClass="control-label" /><br/>
+			<p:selectOneMenu id="profesor" value="#{cursoController.curso.profesor}"
+				converter="omnifaces.SelectItemsConverter" required="true">
+				<f:selectItem itemValue="#{null}" itemLabel="Selecciona un profesor" 
+					noSelectionOption="true" itemDisabled="true"/>
+				<f:selectItems value="#{profesorController.lista}" var="p"
+					itemValue="#{p}" itemLabel="#{p.nombre.concat(' ').concat(p.apellido)}"/>
+			</p:selectOneMenu><br/>
+			
+			<h:outputLabel for="nivel" value="Nivel"
+				styleClass="control-label" />
+			<p:inputText autocomplete="off" id="nivel"
+				styleClass="form-control"
+				value="#{cursoController.curso.nivel}" maxlength="50"
+				required="true" />
+
+			<h:outputLabel for="duracion" value="Duración (en semanas)"
+				styleClass="control-label" />
+			<p:inputText autocomplete="off" id="duracion"
+				styleClass="form-control"
+				value="#{cursoController.curso.duracion}" minValue="1"
+				required="true" />
+			
+			<h:outputLabel for="fechaIni" value="Fecha inicio" 
+				styleClass="control-label" /><br/>
+			<p:calendar id="fechaIni" pattern="dd/MM/yyyy"
+				value="#{cursoController.curso.fechaIni}" showOn="button"
+				required="true">
+			</p:calendar><br/>
+			
+			<h:outputLabel for="fechaFin" value="Fecha fin" 
+				styleClass="control-label" /><br/>
+			<p:calendar id="fechaFin" pattern="dd/MM/yyyy"
+				value="#{cursoController.curso.fechaFin}" showOn="button"
+				required="true">
+			</p:calendar><br/>
+			
+			<h:outputLabel for="enlace" value="Enlace para las clases"
+				styleClass="control-label" />
+			<p:inputText autocomplete="off" id="enlace"
+				styleClass="form-control"
+				value="#{cursoController.curso.enlace}" maxlength="100"
+				required="true" />
+						
+			<br />
+
+			<p:commandButton value="Guardar"
+				actionListener="#{cursoController.insertar()}"
+				styleClass="btn btn-primary" update="@form"
+				action="listCurso?faces-redirect=true" />
+			<p:commandButton value="Cancelar"
+				action="listCurso?faces-redirect=true" immediate="true"
+				styleClass="btn btn-default" ajax="false" />
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footerCont">
+
+	</ui:define>
+</ui:composition>
+</html>

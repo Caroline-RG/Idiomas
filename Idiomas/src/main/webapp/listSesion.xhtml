@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html 	
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+		
+<ui:composition template="master.xhtml"> 
+	
+	<ui:define name="title">
+		Open Language - Sesiones
+	</ui:define>
+	
+	<ui:define name="titleCont">
+		<span>Sesiones</span>
+	</ui:define>
+	
+	<ui:define name="content">
+		<h:form>
+		
+			<div class="row">
+				<div class="col-sm-8 text-right">
+					<div class="form-group box-main-btn">
+						<span style="display: block; height:30px;"></span>
+						<p:commandButton value="Nuevo"						
+							action="#{sesionController.nuevo()}"
+							styleClass="btn btn-primary ajax=false" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group table-responsive box-table-class">
+						<p:dataTable id="list" var="obj"
+							value="#{sesionController.listaSesion}" paginator="true"
+							paginatorPosition="top" rowsPerPageTemplate="10,20,30,40,50"
+							rows="10" styleClass="table table-bordered"
+							emptyMessage="No existen registros" rowIndexVar="item"
+							style="margin-bottom:0">
+
+							<p:column headerText="Id" sortBy="#{obj.id}">
+								<h:outputText value="#{obj.id}" />
+							</p:column>
+
+							<p:column headerText="Curso" sortBy="#{obj.curso.idioma.nombre.concat(' ').concat(obj.curso.nivel)}">
+								<h:outputText value="#{obj.curso.idioma.nombre.concat(' ').concat(obj.curso.nivel)}" />
+							</p:column>
+							
+							<p:column headerText="Día de la semana" sortBy="#{obj.dia.nombre}">
+								<h:outputText value="#{obj.dia.nombre}" />
+							</p:column>
+							
+							<p:column headerText="Hora inicio" sortBy="#{obj.horaIni}">
+								<h:outputText value="#{obj.horaIni}">
+									<f:convertDateTime pattern="HH:mm" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Hora fin" sortBy="#{obj.horaFin}">
+								<h:outputText value="#{obj.horaFin}">
+									<f:convertDateTime pattern="HH:mm" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Operaciones" exportable="false">
+								<h:commandLink action="sesion" value="Editar	"
+									actionListener="#{sesionController.editar(obj)}" />
+								<h:commandLink action="sesionList" value="Eliminar"
+									actionListener="#{sesionController.eliminar(obj)}" />
+							</p:column>
+
+						</p:dataTable>
+					</div>
+				</div>				
+			</div>									
+		</h:form>
+	</ui:define>
+	
+	<ui:define name="footerCont">
+	</ui:define>
+		
+</ui:composition> 
+</html>
+ 

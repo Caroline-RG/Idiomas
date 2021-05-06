@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="master.xhtml">
+
+	<ui:define name="title">
+        Open Language - Matrícula
+    </ui:define>
+
+	<ui:define name="titleCont">
+		<span>Matrícula</span>
+	</ui:define>
+	
+	<ui:define name="content">
+		<h:form>
+			<h:inputHidden id="id" value="#{matriculaController.matricula.id}"/>
+			
+			<h:outputLabel for="curso" value="Curso" 
+				styleClass="control-label" /><br/>
+			<p:selectOneMenu id="idioma" value="#{matriculaController.matricula.curso}"
+				converter="omnifaces.SelectItemsConverter" required="true">
+				<f:selectItem itemValue="#{null}" itemLabel="Selecciona un curso" 
+					noSelectionOption="true" itemDisabled="true"/>
+				<f:selectItems value="#{cursoController.listaCurso}" var="c"
+					itemValue="#{c}" itemLabel="#{c.idioma.nombre.concat(' ').concat(c.nivel)}"/>
+			</p:selectOneMenu><br/>
+			
+			<h:outputLabel for="alumno" value="Alumno" 
+				styleClass="control-label" /><br/>
+			<p:selectOneMenu id="alumno" value="#{matriculaController.matricula.alumno}"
+				converter="omnifaces.SelectItemsConverter" required="true">
+				<f:selectItem itemValue="#{null}" itemLabel="Selecciona un alumno" 
+					noSelectionOption="true" itemDisabled="true"/>
+				<f:selectItems value="#{alumnoController.lista}" var="a"
+					itemValue="#{a}" itemLabel="#{a.nombre.concat(' ').concat(a.apellido)}"/>
+			</p:selectOneMenu><br/>
+			
+			<h:outputLabel for="comprobante" value="Comprobante de pago"
+				styleClass="control-label" />
+			<p:inputText autocomplete="off" id="comprobante"
+				styleClass="form-control"
+				value="#{matriculaController.matricula.comprobante}" maxlength="50"
+				required="true" />
+				
+			<h:outputLabel for="fechaPago" value="Fecha de pago" 
+				styleClass="control-label" /><br/>
+			<p:calendar id="fechaPago" pattern="dd/MM/yyyy"
+				value="#{matriculaController.matricula.fechaPago}" showOn="button"
+				required="true">
+			</p:calendar><br/>
+			
+			<h:outputLabel for="monto" value="Monto pagado (S/)" 
+				styleClass="control-label" /><br/>
+			<p:inputNumber autocomplete="off" id="monto"
+				value="#{matriculaController.matricula.monto}" minValue="0" 
+				decimalPlaces="2" decimalSeparator="." thousandSeparator=","
+				required="true"/><br/>
+						
+			<br />
+
+			<p:commandButton value="Guardar"
+				actionListener="#{matriculaController.insertar()}"
+				styleClass="btn btn-primary" update="@form"
+				action="aviso?faces-redirect=true" />
+			<p:commandButton value="Cancelar"
+				action="listMatricula?faces-redirect=true" immediate="true"
+				styleClass="btn btn-default" ajax="false" />
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footerCont">
+
+	</ui:define>
+</ui:composition>
+</html>

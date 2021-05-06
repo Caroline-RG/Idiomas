@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="master.xhtml">
+
+	<ui:define name="title">
+        Open Language - #{profesorController.profesor.id > 0 ? 'Editar profesor' : 'Nuevo profesor'}
+    </ui:define>
+
+	<ui:define name="titleCont">
+		<span>#{profesorController.profesor.id > 0 ? 'Editar profesor' : 'Nuevo profesor'}</span>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<h:inputHidden id="id" value="#{profesorController.profesor.id}"/>
+			
+			<h:outputLabel for="nombre" value="Nombres"
+				styleClass="control-label" />
+			<p:inputText autocomplete="off" id="nombre"
+				styleClass="form-control"
+				value="#{profesorController.profesor.nombre}" maxlength="50"
+				required="true" />
+
+			<h:outputLabel for="apellido" value="Apellidos"
+				styleClass="control-label" />
+			<p:inputText autocomplete="off" id="apellido"
+				styleClass="form-control"
+				value="#{profesorController.profesor.apellido}" maxlength="50"
+				required="true" />
+			
+			<h:outputLabel for="correo" value="Correo electrónico"
+				styleClass="control-label" />
+			<p:inputText autocomplete="off" id="correo"
+				styleClass="form-control"
+				value="#{profesorController.profesor.correo}" maxlength="50"
+				required="true" />
+			
+			<h:outputLabel for="contrasena" value="Contraseña"
+				styleClass="control-label" />
+			<p:password autocomplete="off" id="contrasena"
+				styleClass="form-control"
+				value="#{profesorController.profesor.contrasena}" maxlength="50" 
+				promptLabel="Ingresa tu contraseña" feedback="true"
+				weakLabel="Débil" goodLabel="Buena" strongLabel="Fuerte"
+				required="true" />		
+			<br />
+
+			<p:commandButton value="Guardar"
+				actionListener="#{profesorController.insertar()}"
+				styleClass="btn btn-primary" update="@form"
+				action="listProfesor?faces-redirect=true" />
+			<p:commandButton value="Cancelar"
+				action="listProfesor?faces-redirect=true" immediate="true"
+				styleClass="btn btn-default" ajax="false" />
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footerCont">
+
+	</ui:define>
+</ui:composition>
+</html>

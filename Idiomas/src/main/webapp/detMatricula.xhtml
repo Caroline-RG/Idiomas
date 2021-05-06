@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="master.xhtml">
+
+	<ui:define name="title">
+        Open Language - Detalle de matrícula
+    </ui:define>
+
+	<ui:define name="titleCont">
+		<span>Detalle de matrícula</span>
+	</ui:define>
+	
+	<ui:define name="content">
+		<h:form>
+			<h:outputLabel for="curso" value="Curso" 
+				styleClass="control-label" /><br/>
+			<p:inputText id="curso"
+				styleClass="form-control"
+				value="#{matriculaController.matricula.curso.idioma.nombre.concat(' ').concat(matriculaController.matricula.curso.nivel)}"
+				disabled="true" />
+				
+			<h:outputLabel for="alumno" value="Alumno" 
+				styleClass="control-label" /><br/>
+			<p:inputText id="alumno" styleClass="form-control"
+				value="#{matriculaController.matricula.alumno.nombre.concat(' ').concat(matriculaController.matricula.alumno.apellido)}"
+				disabled="true" />
+			
+			<h:outputLabel for="duracion" value="Duración (en semanas)"
+				styleClass="control-label" />
+			<p:inputText id="duracion" styleClass="form-control"
+				value="#{matriculaController.matricula.curso.duracion}"
+				disabled="true" />
+			
+			<h:outputLabel for="fechaIni" value="Fecha de inicio" 
+				styleClass="control-label" /><br/>
+			<p:inputText id="fechaIni" styleClass="form-control"
+				value="#{matriculaController.matricula.curso.fechaIni}"
+				disabled="true" >
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</p:inputText>
+			
+			<h:outputLabel for="fechaFin" value="Fecha de término" 
+				styleClass="control-label" /><br/>
+			<p:inputText id="fechaFin" styleClass="form-control"
+				value="#{matriculaController.matricula.curso.fechaFin}"
+				disabled="true" >
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</p:inputText>
+			
+			<h:outputLabel for="enlace" value="Enlace para las clases"
+				styleClass="control-label" />
+			<p:inputText id="enlace" styleClass="form-control"
+				value="#{matriculaController.matricula.curso.enlace}"
+				disabled="true" />
+				
+			<h:outputLabel for="comprobante" value="Comprobante de pago"
+				styleClass="control-label" />
+			<p:inputText id="comprobante" styleClass="form-control"
+				value="#{matriculaController.matricula.comprobante}"
+				disabled="true" />
+				
+			<h:outputLabel for="fechaPago" value="Fecha de pago" 
+				styleClass="control-label" />
+			<p:inputText id="fechaPago" styleClass="form-control"
+				value="#{matriculaController.matricula.fechaPago}"
+				disabled="true" >
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</p:inputText>
+			
+			<h:outputLabel for="monto" value="Monto pagado (S/)" 
+				styleClass="control-label" /><br/>
+			<p:inputText id="monto" styleClass="form-control"
+				value="#{matriculaController.matricula.monto}"
+				disabled="true"/>
+
+			<br/>
+			
+			<h:outputLabel value="Horario del curso" />
+			<br/>
+			
+			<p:dataTable id="list" var="obj"
+				value="#{matriculaController.listaSesion}" paginator="true"
+				paginatorPosition="top" rowsPerPageTemplate="10,20,30,40,50"
+				rows="10" styleClass="table table-bordered"
+				emptyMessage="No existen registros" rowIndexVar="item"
+				style="margin-bottom:0">
+				
+				<p:column headerText="Día de la semana" sortBy="#{obj.dia.nombre}">
+					<h:outputText value="#{obj.dia.nombre}" />
+				</p:column>
+				
+				<p:column headerText="Hora inicio" sortBy="#{obj.horaIni}">
+					<h:outputText value="#{obj.horaIni}">
+						<f:convertDateTime pattern="HH:mm" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Hora fin" sortBy="#{obj.horaFin}">
+					<h:outputText value="#{obj.horaFin}">
+						<f:convertDateTime pattern="HH:mm" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+
+			<br/>
+			
+			<p:commandButton value="Regresar"
+				action="listMatricula?faces-redirect=true" immediate="true"
+				styleClass="btn btn-primary" ajax="false" />
+			
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footerCont">
+
+	</ui:define>
+</ui:composition>
+</html>

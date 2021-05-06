@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html 	
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+		
+<ui:composition template="master.xhtml"> 
+	
+	<ui:define name="title">
+		Open Language - Inscripciones
+	</ui:define>
+	
+	<ui:define name="titleCont">
+		<span>Inscripciones</span>
+	</ui:define>
+	
+	<ui:define name="content">
+		<h:form>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group table-responsive box-table-class">
+						<p:dataTable id="list" var="obj"
+							value="#{matriculaController.listaMatricula}" paginator="true"
+							paginatorPosition="top" rowsPerPageTemplate="10,20,30,40,50"
+							rows="10" styleClass="table table-bordered"
+							emptyMessage="No existen registros" rowIndexVar="item"
+							style="margin-bottom:0">
+
+							<p:column headerText="Id" sortBy="#{obj.id}">
+								<h:outputText value="#{obj.id}" />
+							</p:column>
+
+							<p:column headerText="Curso" sortBy="#{obj.curso.idioma.nombre.concat(' ').concat(obj.curso.nivel)}">
+								<h:outputText value="#{obj.curso.idioma.nombre.concat(' ').concat(obj.curso.nivel)}" />
+							</p:column>
+							
+							<p:column headerText="Alumno" sortBy="#{obj.alumno.nombre.concat(' ').concat(obj.alumno.apellido)}">
+								<h:outputText value="#{obj.alumno.nombre.concat(' ').concat(obj.alumno.apellido)}" />
+							</p:column>
+							
+							<p:column headerText="Comprobante de pago" sortBy="#{obj.comprobante}">
+								<h:outputText value="#{obj.comprobante}" />
+							</p:column>
+							
+							<p:column headerText="Fecha de pago" sortBy="#{obj.fechaPago}">
+								<h:outputText value="#{obj.fechaPago}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Monto pagado (S/)" sortBy="#{obj.monto}">
+								<h:outputText value="#{obj.monto}" />
+							</p:column>
+							
+							<p:column headerText="Detalle" exportable="false">
+								<h:commandLink action="detMatricula" value="Ver"
+									actionListener="#{matriculaController.mostrar(obj)}" />
+							</p:column>
+
+						</p:dataTable>
+					</div>
+				</div>				
+			</div>									
+		</h:form>
+	</ui:define>
+	
+	<ui:define name="footerCont">
+	</ui:define>
+		
+</ui:composition> 
+</html>
+ 

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="master.xhtml">
+
+	<ui:define name="title">
+        Open Language - #{idiomaController.idioma.id > 0 ? 'Editar idioma' : 'Nuevo idioma'}
+    </ui:define>
+
+	<ui:define name="titleCont">
+		<span>#{idiomaController.idioma.id > 0 ? 'Editar idioma' : 'Nuevo idioma'}</span>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<h:inputHidden id="id" value="#{idiomaController.idioma.id}"/>
+			
+			<h:outputLabel for="nombre" value="Nombre"
+				styleClass="control-label" />
+			<p:inputText autocomplete="off" id="nombre"
+				styleClass="form-control"
+				value="#{idiomaController.idioma.nombre}" maxlength="50"
+				required="true" />
+
+			<br />
+
+			<p:commandButton value="Guardar"
+				actionListener="#{idiomaController.insertar()}"
+				styleClass="btn btn-primary" update="@form"
+				action="listIdioma?faces-redirect=true" />
+			<p:commandButton value="Cancelar"
+				action="listIdioma?faces-redirect=true" immediate="true"
+				styleClass="btn btn-default" ajax="false" />
+
+			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="footerCont">
+
+	</ui:define>
+</ui:composition>
+</html>

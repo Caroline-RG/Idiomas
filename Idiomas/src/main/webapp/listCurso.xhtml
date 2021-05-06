@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html 	
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+		
+<ui:composition template="master.xhtml"> 
+	
+	<ui:define name="title">
+		Open Language - Cursos
+	</ui:define>
+	
+	<ui:define name="titleCont">
+		<span>Cursos</span>
+	</ui:define>
+	
+	<ui:define name="content">
+		<h:form>
+		
+			<div class="row">
+				<div class="col-sm-8 text-right">
+					<div class="form-group box-main-btn">
+						<span style="display: block; height:30px;"></span>
+						<p:commandButton value="Nuevo"						
+							action="#{cursoController.nuevo()}"
+							styleClass="btn btn-primary ajax=false" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group table-responsive box-table-class">
+						<p:dataTable id="list" var="obj"
+							value="#{cursoController.listaCurso}" paginator="true"
+							paginatorPosition="top" rowsPerPageTemplate="10,20,30,40,50"
+							rows="10" styleClass="table table-bordered"
+							emptyMessage="No existen registros" rowIndexVar="item"
+							style="margin-bottom:0">
+
+							<p:column headerText="Id" sortBy="#{obj.id}">
+								<h:outputText value="#{obj.id}" />
+							</p:column>
+
+							<p:column headerText="Nombre" sortBy="#{obj.idioma.nombre.concat(' ').concat(obj.nivel)}">
+								<h:outputText value="#{obj.idioma.nombre.concat(' ').concat(obj.nivel)}" />
+							</p:column>
+							
+							<p:column headerText="Profesor" sortBy="#{obj.profesor.nombre.concat(' ').concat(obj.profesor.apellido)}">
+								<h:outputText value="#{obj.profesor.nombre.concat(' ').concat(obj.profesor.apellido)}" />
+							</p:column>
+							
+							<p:column headerText="Duración (semanas)" sortBy="#{obj.duracion}">
+								<h:outputText value="#{obj.duracion}" />
+							</p:column>
+							
+							<p:column headerText="Fecha inicio" sortBy="#{obj.fechaIni}">
+								<h:outputText value="#{obj.fechaIni}" />
+							</p:column>
+							
+							<p:column headerText="Fecha fin" sortBy="#{obj.fechaFin}">
+								<h:outputText value="#{obj.fechaFin}" />
+							</p:column>
+							
+							<p:column headerText="Operaciones" exportable="false">
+								<h:commandLink action="curso" value="Editar	"
+									actionListener="#{cursoController.editar(obj)}" />
+								<h:commandLink action="cursoList" value="Eliminar"
+									actionListener="#{cursoController.eliminar(obj)}" />
+							</p:column>
+
+						</p:dataTable>
+					</div>
+				</div>				
+			</div>									
+		</h:form>
+	</ui:define>
+	
+	<ui:define name="footerCont">
+	</ui:define>
+		
+</ui:composition> 
+</html>
+ 
